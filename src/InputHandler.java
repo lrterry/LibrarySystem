@@ -7,13 +7,13 @@ public class InputHandler {
     Scanner input = new Scanner(System.in);
     Library myLibrary = new Library();
 
-    private int validateIdInput(String userInput) {
+    private int validateIdInput() {
         Boolean validId = false;
         int id = 0;
         while(!validId) {
             System.out.println("Enter Book ID: ");
             try {
-                id = Integer.parseInt(userInput);
+                id = Integer.parseInt(input.nextLine().trim());
                 validId = true;
             } catch (NumberFormatException nfe) {
                 System.out.println("Invalid ID input. Please enter a number.");
@@ -45,7 +45,7 @@ public class InputHandler {
                     title = input.nextLine();
                     System.out.println("Enter Book Author: ");
                     author = input.nextLine();
-                    id = validateIdInput(input.nextLine().trim());
+                    id = validateIdInput();
 
                     if(myLibrary.addBook(id, title, author)) {
                         System.out.println("Book successfully added!");
@@ -61,13 +61,16 @@ public class InputHandler {
                     break;
                 case "CO":
                     int coId = 0;
-                    coId = validateIdInput(input.nextLine().trim());
+                    coId = validateIdInput();
                     myLibrary.checkOutBook(coId);
                     break;
                 case "CI":
                     int ciId = 0;
-                    ciId = validateIdInput(input.nextLine().trim());
+                    ciId = validateIdInput();
                     myLibrary.checkInBook(ciId);
+                    break;
+                case "S":
+                    myLibrary.sortBookList();
                     break;
                 case "Q":
                     System.out.println("Quitting....");

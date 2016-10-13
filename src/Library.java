@@ -32,6 +32,10 @@ public class Library {
         return bookArray;
     }
 
+    public void sortBookList() {
+        bookList = sortBookArrayById(bookList);
+    }
+
     private Boolean checkIfBookExists(int id) {
         Boolean exists = false;
         for(Book i: bookList) {
