@@ -7,6 +7,21 @@ public class InputHandler {
     Scanner input = new Scanner(System.in);
     Library myLibrary = new Library();
 
+    private int validateIdInput(String userInput) {
+        Boolean validId = false;
+        int id = 0;
+        while(!validId) {
+            System.out.println("Enter Book ID: ");
+            try {
+                id = Integer.parseInt(userInput);
+                validId = true;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid ID input. Please enter a number.");
+            }
+        }
+        return id;
+    }
+
     public void startProgram() {
         Boolean quitCondition = false;
 
@@ -25,22 +40,12 @@ public class InputHandler {
                     String title;
                     String author;
                     int id = 0;
-                    Boolean validId = false;
 
                     System.out.println("Enter Book Title: ");
                     title = input.nextLine();
                     System.out.println("Enter Book Author: ");
                     author = input.nextLine();
-
-                    while(!validId) {
-                        System.out.println("Enter Book ID: ");
-                        try {
-                            id = Integer.parseInt(input.nextLine().trim());
-                            validId = true;
-                        } catch (NumberFormatException nfe) {
-                            System.out.println("Invalid ID input. Please enter a number.");
-                        }
-                    }
+                    id = validateIdInput(input.nextLine().trim());
 
                     if(myLibrary.addBook(id, title, author)) {
                         System.out.println("Book successfully added!");
@@ -56,30 +61,12 @@ public class InputHandler {
                     break;
                 case "CO":
                     int coId = 0;
-                    Boolean validCoId = false;
-                    while(!validCoId) {
-                        System.out.println("Enter Book ID to check out: ");
-                        try {
-                            coId = Integer.parseInt(input.nextLine().trim());
-                            validCoId = true;
-                        } catch (NumberFormatException nfe) {
-                            System.out.println("Invalid ID input. Please enter a number.");
-                        }
-                    }
+                    coId = validateIdInput(input.nextLine().trim());
                     myLibrary.checkOutBook(coId);
                     break;
                 case "CI":
                     int ciId = 0;
-                    Boolean validCiId = false;
-                    while(!validCiId) {
-                        System.out.println("Enter Book ID to check out: ");
-                        try {
-                            ciId = Integer.parseInt(input.nextLine().trim());
-                            validCiId = true;
-                        } catch (NumberFormatException nfe) {
-                            System.out.println("Invalid ID input. Please enter a number.");
-                        }
-                    }
+                    ciId = validateIdInput(input.nextLine().trim());
                     myLibrary.checkInBook(ciId);
                     break;
                 case "Q":
