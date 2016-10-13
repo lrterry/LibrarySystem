@@ -1,0 +1,94 @@
+/**
+ * Created by lrterry on 10/13/16.
+ */
+import java.util.Scanner;
+
+public class InputHandler {
+    Scanner input = new Scanner(System.in);
+    Library myLibrary = new Library();
+
+    public void startProgram() {
+        Boolean quitCondition = false;
+
+        while(!quitCondition) {
+            System.out.println("Welcome to the interactive library. Enter a command! (h for help)");
+            switch(input.nextLine().toUpperCase().trim()) {
+                case "H":
+                    System.out.println("* a: add book");
+                    System.out.println("* l: list books");
+                    System.out.println("* la: list info on all books");
+                    System.out.println("* co: check out a book");
+                    System.out.println("* ci: check in a book");
+                    System.out.println("* q: quit the program");
+                    break;
+                case "A":
+                    String title;
+                    String author;
+                    int id = 0;
+                    Boolean validId = false;
+
+                    System.out.println("Enter Book Title: ");
+                    title = input.nextLine();
+                    System.out.println("Enter Book Author: ");
+                    author = input.nextLine();
+
+                    while(!validId) {
+                        System.out.println("Enter Book ID: ");
+                        try {
+                            id = Integer.parseInt(input.nextLine().trim());
+                            validId = true;
+                        } catch (NumberFormatException nfe) {
+                            System.out.println("Invalid ID input. Please enter a number.");
+                        }
+                    }
+
+                    if(myLibrary.addBook(id, title, author)) {
+                        System.out.println("Book successfully added!");
+                    } else {
+                        System.out.println("Error, this Book is already in the Library");
+                    }
+                    break;
+                case "L":
+                    myLibrary.listBooks();
+                    break;
+                case "LA":
+                    myLibrary.listAllBookInfo();
+                    break;
+                case "CO":
+                    int coId = 0;
+                    Boolean validCoId = false;
+                    while(!validCoId) {
+                        System.out.println("Enter Book ID to check out: ");
+                        try {
+                            coId = Integer.parseInt(input.nextLine().trim());
+                            validCoId = true;
+                        } catch (NumberFormatException nfe) {
+                            System.out.println("Invalid ID input. Please enter a number.");
+                        }
+                    }
+                    myLibrary.checkOutBook(coId);
+                    break;
+                case "CI":
+                    int ciId = 0;
+                    Boolean validCiId = false;
+                    while(!validCiId) {
+                        System.out.println("Enter Book ID to check out: ");
+                        try {
+                            ciId = Integer.parseInt(input.nextLine().trim());
+                            validCiId = true;
+                        } catch (NumberFormatException nfe) {
+                            System.out.println("Invalid ID input. Please enter a number.");
+                        }
+                    }
+                    myLibrary.checkInBook(ciId);
+                    break;
+                case "Q":
+                    System.out.println("Quitting....");
+                    quitCondition = true;
+                    break;
+                default:
+                    System.out.println("Error, invalid input!");
+            }
+        }
+    }
+}
